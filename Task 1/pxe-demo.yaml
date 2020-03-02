@@ -1,27 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: "2020-03-01T15:08:28Z"
-  generation: 1
+  creationTimestamp: null
   labels:
     run: pxe-demo
   name: pxe-demo
-  namespace: chamod
-  resourceVersion: "8646862"
-  selfLink: /apis/apps/v1/namespaces/chamod/deployments/pxe-demo
-  uid: 819df0e4-5bce-11ea-ad19-42010a80017b
 spec:
-  progressDeadlineSeconds: 600
   replicas: 3
-  revisionHistoryLimit: 10
   selector:
     matchLabels:
       run: pxe-demo
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
+  strategy: {}
   template:
     metadata:
       creationTimestamp: null
@@ -30,17 +19,12 @@ spec:
     spec:
       containers:
       - image: nj93/pxe-demo
-        imagePullPolicy: Always
         name: pxe-demo
         ports:
         - containerPort: 8080
-          protocol: TCP
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
+        resources: 
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        
 status: {}
